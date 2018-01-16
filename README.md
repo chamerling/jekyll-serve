@@ -1,8 +1,9 @@
-# Jekyll in a Docker Container
+# Jekyll 3.7.0 in a Docker Container
 
 > But this has been done. Why not `docker pull jekyll/jekyll`?
 
 - I wanted defaults to be `jekyll serve` when container is run, which I use 90% of time
+- I wanted the last jekyll version (3.7.0) with livereload support \o/
 - I wanted to dev on a local jekyll site w/o having jekyll installed on my host OS
 - I wanted it to be as easy as possible to start
 - I wanted current alpine, ruby, and jekyll
@@ -15,14 +16,14 @@ Assuming Docker and Docker Compose are installed:
 
 ```shell
 cd dir/of/your/jekyll/site
-docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+docker run -p 4000:4000 -p 35729:35729 -v $(pwd):/site chamerling/jekyll-serve
 ```
 
-That's it! 
+That's it!
 
 Details: it will mount your current path into the containers `/site`, `bundle install` before running `jekyll serve` to , serve it at `http://localhost`.
 
-To make this even easier, copy `docker-compose.yml` [from this repo](https://github.com/BretFisher/jekyll-serve/blob/master/docker-compose.yml) to your jekyll site root. Then you'll only need to:
+To make this even easier, copy `docker-compose.yml` [from this repo](https://github.com/chamerling/jekyll-serve/blob/master/docker-compose.yml) to your jekyll site root. Then you'll only need to:
 
 ```shell
 cd dir/of/your/jekyll/site
@@ -36,7 +37,7 @@ docker-compose up
 just add a environment variable to the `run` command to tell the container to make one:
 
 ```shell
-docker run -p 80:4000 -v $(pwd):/site -e JEKYLL_NEW=true bretfisher/jekyll-serve
+docker run -p 80:4000 -v $(pwd):/site -e JEKYLL_NEW=true chamerling/jekyll-serve
 ```
 
 **Q. What if I want to run other jekyll commands?**
@@ -44,14 +45,14 @@ docker run -p 80:4000 -v $(pwd):/site -e JEKYLL_NEW=true bretfisher/jekyll-serve
 just add the command to the end (with your -v included) to override the `jekyll serve`:
 
 ```shell
-docker run -v $(pwd):/site bretfisher/jekyll-serve jekyll doctor
+docker run -v $(pwd):/site chamerling/jekyll-serve jekyll doctor
 ```
 
 ## License
 
 MIT License
 
-Copyright (c) [2017] [Bret Fisher bret@bretfisher.com]
+Copyright (c) [2018] Christophe Hamerling <chamerling@linagora.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

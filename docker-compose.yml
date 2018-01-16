@@ -2,8 +2,9 @@ version: '2'
 
 services:
   jekyll:
-    image: bretfisher/jekyll-serve
+    image: chamerling/jekyll-serve
     volumes:
       - .:/site
     ports:
-      - '80:4000'
+      - '4000:4000'
+      - '35729:35729'
